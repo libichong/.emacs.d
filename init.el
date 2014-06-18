@@ -353,11 +353,11 @@
            (lambda () (highlight-indentation-current-column-mode)))
 
 
-(require 'flatui-theme)
-(set-background-color "white")
+;;(require 'flatui-theme)
+;;(set-background-color "white")
 ;;=============================================================================
 (require 'minimap-settings)
-
+(require 'dev-settings)
 ;; show time
 (let* ((time (current-time))
        (low-sec (nth 1 time))

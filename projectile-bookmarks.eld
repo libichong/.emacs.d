@@ -1,0 +1,1 @@
+("d:/Code/GitHub/KernelStudy/" "~/.emacs.d/")

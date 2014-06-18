@@ -1,0 +1,6 @@
+alias debug sdenv winide /debugexe $*
+alias winide sdenv winide $*
+alias windiff sdenv windiff $*
+alias sdb sdenv sdb $*
+alias sdv sdenv sdv $*
+alias sd sdenv sd $*
