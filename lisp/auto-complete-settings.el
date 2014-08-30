@@ -5,7 +5,6 @@
 (require 'auto-complete-config)
 (require 'auto-complete+)
 (require 'util)
-(require 'js2-mode)
 
 ;; After do this, isearch any string, M-: (match-data) always
 ;; return the list whose elements is integer

@@ -17,7 +17,7 @@
 ;; write  to  the Free  Software  Foundation,  Inc., 51  Franklin
 ;; Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-;; 个人信息
+;; personal informatio
 (setq user-mail-address "bichongl@microsoft.com")
 (setq user-full-name    "bichongl")
 
@@ -29,7 +29,7 @@
 
 (setq system-time-locale "C")
 
-;; 不要滚动条
+;; disable scroll bar
 (customize-set-variable 'scroll-bar-mode nil)
 
 ;; 支持emacs和外部程序的粘贴
@@ -50,33 +50,33 @@
 ;; emacs lock
 (autoload 'toggle-emacs-lock "emacs-lock" "Emacs lock" t)
 
-;; 启用以下功能
 (put 'narrow-to-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
 
-;; 不显示Emacs的开始画面
+;; inhibit the startup message
 (setq inhibit-startup-message t)
 (setq initial-scratch-message "")
 
 ;; Make all yes-or-no questions as y-or-n
 (fset 'yes-or-no-p 'y-or-n-p)
 
-;; 不要闪烁光标, 烦不烦啊
+;; disable blink cursor
 (blink-cursor-mode -1)
 
 
-;; 防止页面滚动时跳动,scroll-margin 3可以在靠近屏幕边沿3行时就开始滚动,可以很好的看到上下文
+;; 防止页面滚动时跳动,scroll-margin 3
+;;可以在靠近屏幕边沿3行时就开始滚动,可以很好的看到上下文
 (setq scroll-margin 3
       scroll-conservatively 10000)
 
-;; 没有提示音,也不闪屏
+;; no ring bell
 (setq ring-bell-function 'ignore)
 
 ;; 可以递归的使用minibuffer
 (setq enable-recursive-minibuffers t)
 
-;; 当你在shell、telnet、w3m等模式下时，必然碰到过要输入密码的情况,此时加密显出你的密码
+;; show the pwd as *
 (add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
 
 ;; 可以保存你上次光标所在的位置
@@ -138,9 +138,6 @@
 charset
 (font-spec :family "Microsoft YaHei" :size 15)))
 
-;; inhibit the startup message
-(setq inhibit-startup-message t)
-
 ;; hilight syntax
 (global-font-lock-mode t)
 
@@ -159,14 +156,12 @@ charset
 (setq sentence-end
       "\\([¡££¡£¿]\\|¡­¡­\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
 
-;; Òþ²Ø¹ö¶¯Ìõ
 (scroll-bar-mode -1)
 
 (mouse-avoidance-mode 'animate)
-;; ²»ÒªÔÚÊó±ê¹â±ê´¦²åÈë
 
-(put 'scroll-left 'disabled nil);;ÔÊÐíÆÁÄ»×óÒÆ
-(put 'scroll-right 'disabled nil);;ÔÊÐíÆÁÄ»ÓÒÒÆ
+(put 'scroll-left 'disabled nil)
+(put 'scroll-right 'disabled nil)
 (put 'set-goal-column 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
@@ -179,8 +174,6 @@ charset
 (set-frame-width nil 124)
 
 ;; stop to blink the cursor
-(blink-cursor-mode t)
-;; ¸ßÁÁ¶ÈÏÔÊ¾Ñ¡ÖÐÇøÓò
 (transient-mark-mode 1)
 
 ;;the maxmium size of kill ring
@@ -198,6 +191,13 @@ charset
 
 ;; color-theme
 (require 'molokai-theme)
+(set-face-attribute 'region nil :background "#866")
+;; (require-package 'color-theme)
+;; (require 'color-theme)
+;; (require-package 'color-theme-solarized)
+;; ;;(require 'color-theme-solarized)
+;; ;; (require 'flatui-theme)
+;; (set-background-color "gray86")
 
 (global-auto-revert-mode t)
 
@@ -233,8 +233,23 @@ charset
 (setq backup-directory-alist '(("." . "~/.autosave")))
 
 (global-hl-line-mode 1)
+(set-face-background 'hl-line "CornflowerBlue")
 
 (global-set-key (kbd "C-c b") 'browse-url-at-point)
+
+;; don't let the cursor go into minibuffer prompt
+(setq minibuffer-prompt-properties (quote (read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
+
+(defun stop-using-minibuffer ()
+  "kill the minibuffer"
+  (when (and (>= (recursion-depth) 1) (active-minibuffer-window))
+    (abort-recursive-edit)))
+
+(add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
+(setq completion-ignore-case t)
+(setq read-buffer-completion-ignore-case t)
+(setq read-file-name-completion-ignore-case t)
+(setq inhibit-splash-screen t)
 
 ;; (global-set-key [(f8)] 'loop-alpha)
 ;; (setq alpha-list '((100 100) (95 65) (85 55) (75 45) (65 35)))
