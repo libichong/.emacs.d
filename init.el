@@ -161,6 +161,7 @@
 (defalias 'bcf 'byte-compile-file)
 (global-set-key "\C-l" 'bookmark-bmenu-list)
 
+(require-package 'layout-restore)
 (require 'layout-restore)
 (defalias 'lc 'layout-save-current)
 (defalias 'lr 'layout-restore)
