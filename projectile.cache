@@ -1,1 +1,0 @@
-#s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8 data ("d:/app/emacs-24.3/.emacs.d/" ("eshell/alias" "lisp/dev-settings.el" "elpa/ctypes-1.2/ctypes-autoloads.el" "init.el") "d:/Code/GitHub/KernelStudy/" ("GetBinaryType.cs" "ImageHelper.cs")))
