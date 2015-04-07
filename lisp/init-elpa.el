@@ -10,8 +10,6 @@
 
 (require 'package)
 
-
-
 ;;; Add support to package.el for pre-filtering available packages
 
 (defvar package-filter-function nil
@@ -34,11 +32,9 @@ ARCHIVE is the string name of the package archive.")
 		     archive))
     ad-do-it))
 
-
-
 ;;; Standard package repositories
 
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 
 ;; We include the org repository for completeness, but don't normally
 ;; use it.
@@ -57,7 +53,6 @@ ARCHIVE is the string name of the package archive.")
             (not (memq package '())))))
 
 
-
 ;;; On-demand installation of packages
 
 (defun require-package (package &optional min-version no-refresh)
@@ -72,14 +67,10 @@ re-downloaded in order to locate PACKAGE."
         (package-refresh-contents)
         (require-package package min-version t)))))
 
-
-
 ;;; Fire up package.el
 
 (package-initialize)
 
-
-
 (require-package 'fullframe)
 (fullframe list-packages quit-window)
 

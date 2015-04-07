@@ -62,7 +62,7 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; disable blink cursor
-(blink-cursor-mode -1)
+(blink-cursor-mode t)
 
 
 ;; 防止页面滚动时跳动,scroll-margin 3
@@ -136,7 +136,7 @@
 (dolist (charset '(kana han symbol cjk-misc bopomofo))
 (set-fontset-font (frame-parameter nil 'font)
 charset
-(font-spec :family "Microsoft YaHei" :size 15)))
+(font-spec :family "Microsoft YaHei" :size 12)))
 
 ;; hilight syntax
 (global-font-lock-mode t)
@@ -180,7 +180,7 @@ charset
 (setq kill-ring-max 200)
 
 ;; alert while load large file
-(setq large-file-warning-threshold 4000000)
+(setq large-file-warning-threshold 400000000)
 
 ;; don't create backup file
 (setq-default make-backup-files nil)
@@ -216,7 +216,7 @@ charset
 
 
 (setq-default cursor-type 'box)
-(set-cursor-color "red")
+(set-cursor-color "green")
 
 (setq w32-pass-lwindow-to-system nil
       w32-pass-rwindow-to-system nil
@@ -233,9 +233,7 @@ charset
 (setq backup-directory-alist '(("." . "~/.autosave")))
 
 (global-hl-line-mode 1)
-(set-face-background 'hl-line "CornflowerBlue")
-
-(global-set-key (kbd "C-c b") 'browse-url-at-point)
+;;(set-face-background 'hl-line "CornflowerBlue")
 
 ;; don't let the cursor go into minibuffer prompt
 (setq minibuffer-prompt-properties (quote (read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
@@ -251,6 +249,9 @@ charset
 (setq read-file-name-completion-ignore-case t)
 (setq inhibit-splash-screen t)
 
+(setq exec-path (add-to-list 'exec-path "C:/Users/bichongl/.babun/cygwin/bin"))
+;;(setenv "PATH" (concat "C:/Users/bichongl/.babun/cygwin/bin;" (getenv "PATH")))
+(defconst my-emacs-lisps-path "~/.emacs.d/lisp/" "my emacs root")
 ;; (global-set-key [(f8)] 'loop-alpha)
 ;; (setq alpha-list '((100 100) (95 65) (85 55) (75 45) (65 35)))
 ;; (defun loop-alpha ()
@@ -263,6 +264,28 @@ charset
     ;; (setq alpha-list (cdr (append alpha-list (list h))))
     ;; )
 ;; )
+
+(defun sanityinc/utf8-locale-p (v)
+  "Return whether locale string V relates to a UTF-8 locale."
+  (and v (string-match "UTF-8" v)))
+
+(defun locale-is-utf8-p ()
+  "Return t iff the \"locale\" command or environment variables prefer UTF-8."
+  (or (sanityinc/utf8-locale-p (and (executable-find "locale") (shell-command-to-string "locale")))
+      (sanityinc/utf8-locale-p (getenv "LC_ALL"))
+      (sanityinc/utf8-locale-p (getenv "LC_CTYPE"))
+      (sanityinc/utf8-locale-p (getenv "LANG"))))
+
+(when (or window-system (locale-is-utf8-p))
+  (setq utf-translate-cjk-mode nil) ; disable CJK coding/encoding (Chinese/Japanese/Korean characters)
+  (set-language-environment 'utf-8)
+  (setq locale-coding-system 'utf-8)
+  (set-default-coding-systems 'utf-8)
+  (set-terminal-coding-system 'utf-8)
+  (unless (eq system-type 'windows-nt)
+   (set-selection-coding-system 'utf-8))
+  (prefer-coding-system 'utf-8))
+
 (defun pi-toggle-font()
   "Toggle between large and small font."
   (interactive)
@@ -274,4 +297,56 @@ charset
       (set-frame-font pi-small-font t)
       (setq pi-current-font-size "small"))))
 
+;;maximize the emacs in the last line, otherwise it won't work.
+(defun w32-restore-frame ()
+  "Restore a minimized frame"
+  (interactive)
+  (w32-send-sys-command 61728))
+
+(defun w32-maximize-frame ()
+  "Maximize the current frame"
+  (interactive)
+  (w32-send-sys-command 61488))
+(run-with-idle-timer 1 nil 'w32-send-sys-command 61488)
+(add-hook 'window-setup-hook 'w32-maximize-frame t)
+(autoload 'w32-fullscreen "w32-fullscreen")
+(global-set-key [C-S-f11] 'w32-fullscreen)
+(global-set-key [C-f11] 'w32-maximize-frame)
+(global-set-key [C-S-f11] 'w32-restore-frame)
+
+;;(require 'recentf)
+(recentf-mode t)
+(defun revert-buffer-no-confirm ()
+  "Revert buffer without confirmation."
+  (interactive) (revert-buffer t t))
+
+(winner-mode t)
+(global-set-key (kbd "<f10>")   'winner-undo)
+(global-set-key (kbd "<S-f10>") 'winner-redo)
+
+;;global key binding
+(global-set-key [(super backspace)] '(lambda () (interactive) (kill-buffer (current-buffer))))
+(global-set-key [(meta down)] 'comment-and-go-down)
+(global-set-key [(meta up)] 'uncomment-and-go-up)
+(global-set-key [(super return)] 'find-file-at-point)
+(global-set-key [(control return)] 'dired-jump)
+(global-set-key [(meta k)] 'bc-kill-whole-line)
+(global-set-key [f12] 'save-buffer)
+(global-set-key [f5] 'toggle-read-only)
+(global-set-key [f6] 'revert-buffer-no-confirm)
+(global-set-key (kbd "<f7>") 'recentf-open-files)
+(global-set-key "\C-l" 'bookmark-bmenu-list)
+(global-set-key (kbd "C-c C-f") 'indent-region)
+(defalias 'qrr 'query-replace-regexp)
+(defalias 'rs 'replace-string)
+(defalias 'bkl 'bookmark-bmenu-list)
+(defalias 'bks 'bookmark-set)
+(defalias 'bkj 'bookmark-jump)
+(defalias 'bkd 'bookmark-delete)
+(defalias 'bcf 'byte-compile-file)
+(defalias 'cc 'calc)
+(defalias 'sh 'shell)
+(defalias 'ps 'powershell)
+(defalias 'rf 'recentf-open-files)
+(defalias 'lcd 'list-colors-display)
 (provide 'init-misc)
