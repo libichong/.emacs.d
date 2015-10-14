@@ -90,21 +90,84 @@
   :version "24")
 (global-rainbow-mode)
 
+(require-package 'color-theme)
+;;(require-package 'load-theme-buffer-local)
+(require-package 'leuven-theme)
+(load-theme 'leuven t)
+;; (require 'molokai-theme)
+;; (set-face-attribute 'region nil :background "#866")
+
 (setq everything-ffap-integration nil) ; to disable ffap integration
 (setq everything-cmd "C:\\Users\\bichongl\\OneDrive\\app\\es.exe")        ;; to let everything.el know where to find es.exe
 (require 'everything)
 (defalias 'es 'everything)
 
+;; (require-package 'ace-jump-mode)
+;; (autoloaddcdcscdcscdcascs
+  ;; 'ace-jump-mode
+  ;; "ace-jump-mode"
+  ;; "Emacs quick move minor mode"
+  ;; t)
+;; (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+
+(require-package 'async)
+(require-package 'avy)
+(global-set-key (kbd "C-;") 'avy-goto-char)
+(global-set-key (kbd "C-'") 'avy-goto-char-2)
+(global-set-key (kbd "M-g f") 'avy-goto-line)
+(require-package 'anzu)
+(global-anzu-mode +1)
+(global-set-key (kbd "M-%") 'anzu-query-replace)
+(global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
+
 (require-package 'nyan-mode)
 (case window-system
   ((x w32) (nyan-mode)))
-
-(require-package 'anzu)
-(global-anzu-mode +1)
 
 (require-package 'powerline)
 (require 'powerline)
 (setq powerline-arrow-shape 'arrow)
 (powerline-default-theme)
 (setq powerline-default-separator-dir '(right . left))
+
+(require-package 'evil)
+(require 'evil)
+(evil-mode 1)
+
+(require-package 'spacemacs-theme)
+(load-theme 'spacemacs-dark t)
+
+(require-package 'evil-leader)
+(require 'evil-leader)
+(global-evil-leader-mode)
+(evil-leader/set-leader ",")
+(require-package 'window-numbering)
+(require 'window-numbering)
+(setq window-numbering-assign-func
+      (lambda () (when (equal (buffer-name) "*Calculator*") 9)))
+      (evil-leader/set-key
+        "0" 'select-window-0
+        "1" 'select-window-1
+        "2" 'select-window-2
+        "3" 'select-window-3
+        "4" 'select-window-4
+        "5" 'select-window-5
+        "6" 'select-window-6
+        "7" 'select-window-7
+        "8" 'select-window-8
+        "9" 'select-window-9)
+      (window-numbering-mode 1)
+
+(require-package 'evil-escape)
+(require 'evil-escape)
+(global-set-key (kbd "C-c C-g") 'evil-escape)
+
+(require-package 'key-chord)
+(key-chord-mode 1)
+(setq-default evil-escape-delay 0.2)
+(key-chord-define evil-insert-state-map  "jk" 'evil-normal-state)
+
+(require-package 'hungry-delete)
+(require 'hungry-delete)
+(global-hungry-delete-mode t)
 (provide 'init-pack)

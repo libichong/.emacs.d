@@ -41,6 +41,8 @@
 ;; 显示列号
 (setq column-number-mode t)
 
+(setq redisplay-dont-pause t)
+
 (setq-default show-trailing-whitespace t)
 (setq-default show-leading-whitespace t)
 ;; la face utilisée pour les espaces inutiles.
@@ -131,12 +133,12 @@
 
 ;;中文与外文字体设置
 ;; Setting English Font
-(set-face-attribute 'default nil :family "Consolas" :height 110)
+(set-face-attribute 'default nil :family "Consolas" :height 100)
 ;; Chinese Font
 (dolist (charset '(kana han symbol cjk-misc bopomofo))
 (set-fontset-font (frame-parameter nil 'font)
 charset
-(font-spec :family "Microsoft YaHei" :size 12)))
+(font-spec :family "Microsoft YaHei" :size 11)))
 
 ;; hilight syntax
 (global-font-lock-mode t)
@@ -189,16 +191,6 @@ charset
 (setq dired-recursive-copies 'top)
 (setq dired-recursive-deletes 'top)
 
-;; color-theme
-(require 'molokai-theme)
-(set-face-attribute 'region nil :background "#866")
-;; (require-package 'color-theme)
-;; (require 'color-theme)
-;; (require-package 'color-theme-solarized)
-;; ;;(require 'color-theme-solarized)
-;; ;; (require 'flatui-theme)
-;; (set-background-color "gray86")
-
 (global-auto-revert-mode t)
 
 (setq w32-pass-lwindow-to-system nil) ;; prevent single keypress from activating Start Menu
@@ -216,7 +208,8 @@ charset
 
 
 (setq-default cursor-type 'box)
-(set-cursor-color "green")
+(set-cursor-color "goldenrod")
+
 
 (setq w32-pass-lwindow-to-system nil
       w32-pass-rwindow-to-system nil
@@ -251,7 +244,6 @@ charset
 
 (setq exec-path (add-to-list 'exec-path "C:/Users/bichongl/.babun/cygwin/bin"))
 ;;(setenv "PATH" (concat "C:/Users/bichongl/.babun/cygwin/bin;" (getenv "PATH")))
-(defconst my-emacs-lisps-path "~/.emacs.d/lisp/" "my emacs root")
 ;; (global-set-key [(f8)] 'loop-alpha)
 ;; (setq alpha-list '((100 100) (95 65) (85 55) (75 45) (65 35)))
 ;; (defun loop-alpha ()
@@ -314,6 +306,60 @@ charset
 (global-set-key [C-f11] 'w32-maximize-frame)
 (global-set-key [C-S-f11] 'w32-restore-frame)
 
+(defvar mode-line-cleaner-alist
+  `((auto-complete-mode . "")
+    (yas/minor-mode . " υ")
+    (paredit-mode . " π")
+    (eldoc-mode . "")
+    (abbrev-mode . "")
+    (undo-tree-mode . "")
+    (anzu-mode . "")
+    (global-whitespace-mode . "")
+    ;; Major modes
+    (lisp-interaction-mode . "λ")
+    (hi-lock-mode . "")
+    (python-mode . "Py")
+    (emacs-lisp-mode . "Lisp")
+    (helm-mode . "Helm")
+    (which-key-mode . "")
+    (nxhtml-mode . "nx"))
+  "Alist for `clean-mode-line'.
+
+When you add a new element to the alist, keep in mind that you
+must pass the correct minor/major mode symbol and a string you
+want to use in the modeline *in lieu of* the original.")
+
+
+(defun clean-mode-line ()
+  (interactive)
+  (loop for cleaner in mode-line-cleaner-alist
+        do (let* ((mode (car cleaner))
+                 (mode-str (cdr cleaner))
+                 (old-mode-str (cdr (assq mode minor-mode-alist))))
+             (when old-mode-str
+                 (setcar old-mode-str mode-str))
+               ;; major mode
+             (when (eq mode major-mode)
+               (setq mode-name mode-str)))))
+
+
+(add-hook 'after-change-major-mode-hook 'clean-mode-line)
+
+;;; alias the new `flymake-report-status-slim' to
+;;; `flymake-report-status'
+(defalias 'flymake-report-status 'flymake-report-status-slim)
+(defun flymake-report-status-slim (e-w &optional status)
+  "Show \"slim\" flymake status in mode line."
+  (when e-w
+    (setq flymake-mode-line-e-w e-w))
+  (when status
+    (setq flymake-mode-line-status status))
+  (let* ((mode-line " Φ"))
+    (when (> (length flymake-mode-line-e-w) 0)
+      (setq mode-line (concat mode-line ":" flymake-mode-line-e-w)))
+    (setq mode-line (concat mode-line flymake-mode-line-status))
+    (setq flymake-mode-line mode-line)
+    (force-mode-line-update)))
 ;;(require 'recentf)
 ;; (recentf-mode t)
 ;; (defun revert-buffer-no-confirm ()
@@ -349,4 +395,5 @@ charset
 (defalias 'ps 'powershell)
 (defalias 'rf 'recentf-open-files)
 (defalias 'lcd 'list-colors-display)
+
 (provide 'init-misc)

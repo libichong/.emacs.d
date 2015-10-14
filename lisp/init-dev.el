@@ -1,7 +1,5 @@
 (require 'ctypes)
 (require 'xcscope);; it provide cscope-index-file which call cscope-indexer.bat
-(require-package 'helm-gtags)
-(require 'helm-gtags)
 (require 'csingleton)
 
 (setq-default c-indent-tabs-mode t     ; Pressing TAB should cause indentation
@@ -80,7 +78,6 @@
     (toggle-truncate-lines 1)
     (c-set-offset 'innamespace '+)
     (c-set-offset 'inline-open 0)
-
     )
 (add-hook  'csharp-mode-hook 'my-csharp-mode-fn t)
 
@@ -91,7 +88,7 @@
      (auto-complete-mode 1)
      (setq python-indent-offset 4)
      (setq python-indent-guess-indent-offset nil)
-     )
+    )
 (add-hook  'python-mode-hook 'my-python-mode-fn t)
 
 (global-set-key (kbd "<f8>") 'gcc)
