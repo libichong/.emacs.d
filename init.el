@@ -8,7 +8,6 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 ;; define the start time before loading no configuration
 (defvar *emacs-load-start* (current-time))
-
 (require 'init-misc)
 (require 'init-func)
 (require 'init-site-lisp)
@@ -16,6 +15,7 @@
 (require 'init-pack)
 (require 'init-helm)
 (require 'init-dev)
+
 ;; show time
 (let* ((time (current-time))
        (low-sec (nth 1 time))

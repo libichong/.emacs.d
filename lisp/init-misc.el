@@ -315,10 +315,10 @@ charset
 (global-set-key [C-S-f11] 'w32-restore-frame)
 
 ;;(require 'recentf)
-(recentf-mode t)
-(defun revert-buffer-no-confirm ()
-  "Revert buffer without confirmation."
-  (interactive) (revert-buffer t t))
+;; (recentf-mode t)
+;; (defun revert-buffer-no-confirm ()
+  ;; "Revert buffer without confirmation."
+  ;; (interactive) (revert-buffer t t))
 
 (winner-mode t)
 (global-set-key (kbd "<f10>")   'winner-undo)
@@ -334,7 +334,7 @@ charset
 (global-set-key [f12] 'save-buffer)
 (global-set-key [f5] 'toggle-read-only)
 (global-set-key [f6] 'revert-buffer-no-confirm)
-(global-set-key (kbd "<f7>") 'recentf-open-files)
+;;(global-set-key (kbd "<f7>") 'recentf-open-files)
 (global-set-key "\C-l" 'bookmark-bmenu-list)
 (global-set-key (kbd "C-c C-f") 'indent-region)
 (defalias 'qrr 'query-replace-regexp)

@@ -1,6 +1,6 @@
 (require-package 'helm)
 (require 'helm-config)
-(helm-mode 1)
+(helm-mode )
 
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
 (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
@@ -64,7 +64,7 @@
 (global-set-key (kbd "C-h m") 'helm-all-mark-rings) ;; show all marked string, what is marked?
 
 (require-package 'helm-swoop)
-(require 'helm-swoop)                                                           
+(require 'helm-swoop)
 ;; ;; Change keybinds to whatever you like :)
 (global-set-key (kbd "M-i") 'helm-swoop)
 (global-set-key (kbd "M-I") 'helm-swoop-back-to-last-point)

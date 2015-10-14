@@ -1,3 +1,6 @@
+;;run M-x esup, and watch the magic happen.
+(require-package 'esup)
+(require 'esup)
 ;;==============================================================================
 ;; window number
 (require-package 'window-number)
@@ -86,24 +89,6 @@
   :group 'rainbow
   :version "24")
 (global-rainbow-mode)
-
-(require-package 'projectile)
-(require 'projectile)
-(projectile-global-mode)
-;;(setq find-program "C:\\Users\\bichongl\\.babun\\cygwin\\bin\\find.exe")
-(setq projectile-indexing-method 'native)
-(setq projectile-enable-caching t)
-(setq projectile-require-project-root nil)
-(setq projectile-switch-project-action 'helm-projectile-find-file)
-
-;; Press Command-p for fuzzy find in project
-(global-set-key (kbd "\C-o") 'projectile-find-file)
-;; Press Command-b for fuzzy switch buffer
-(global-set-key (kbd "\C-b") 'projectile-switch-to-buffer)
-
-(require-package 'helm-projectile)
-(require 'helm-projectile)
-(helm-projectile-on)
 
 (setq everything-ffap-integration nil) ; to disable ffap integration
 (setq everything-cmd "C:\\Users\\bichongl\\OneDrive\\app\\es.exe")        ;; to let everything.el know where to find es.exe
