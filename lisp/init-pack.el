@@ -10,8 +10,14 @@
  `window-number-meta-mode' enables the use of the M- prefix."
   t)
 ;;=============================================================================
-(require-package 'auto-complete)
-(require 'auto-complete-settings)
+;; (require-package 'auto-complete)
+;; (require 'auto-complete-settings)
+
+(require-package 'company)
+(add-hook 'after-init-hook 'global-company-mode)
+(setq company-idle-delay 0)
+(setq company-minimum-prefix-length 2)
+(setq company-selection-wrap-around t)
 
 (require 'bm)
 (global-set-key (kbd "<C-f2>") 'bm-toggle)
@@ -76,9 +82,9 @@
 (global-set-key [(shift f8)] 'highlight-symbol-prev)
 (global-set-key [(meta f8)] 'highlight-symbol-query-replace)
 
-(require-package 'undo-tree)
-(require 'undo-tree)
-(global-undo-tree-mode)
+;; (require-package 'undo-tree)
+;; (require 'undo-tree)
+;; (global-undo-tree-mode)
 
 (require-package 'rainbow-mode)
 (require 'rainbow-mode)
@@ -90,10 +96,10 @@
   :version "24")
 (global-rainbow-mode)
 
-(require-package 'color-theme)
-;;(require-package 'load-theme-buffer-local)
-(require-package 'leuven-theme)
-(load-theme 'leuven t)
+;; (require-package 'color-theme)
+;; (require-package 'load-theme-buffer-local)
+;; (require-package 'leuven-theme)
+;; (load-theme 'leuven t)
 ;; (require 'molokai-theme)
 ;; (set-face-attribute 'region nil :background "#866")
 
@@ -110,11 +116,12 @@
   ;; t)
 ;; (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
-(require-package 'async)
 (require-package 'avy)
 (global-set-key (kbd "C-;") 'avy-goto-char)
 (global-set-key (kbd "C-'") 'avy-goto-char-2)
-(global-set-key (kbd "M-g f") 'avy-goto-line)
+(global-set-key (kbd "C-f") 'avy-goto-line)
+(global-set-key (kbd "C-j") 'goto-line)
+
 (require-package 'anzu)
 (global-anzu-mode +1)
 (global-set-key (kbd "M-%") 'anzu-query-replace)
@@ -132,10 +139,14 @@
 
 (require-package 'evil)
 (require 'evil)
-(evil-mode 1)
+(evil-mode 0)
 
-(require-package 'spacemacs-theme)
-(load-theme 'spacemacs-dark t)
+;; (require-package 'spacemacs-theme)
+;; (load-theme 'spacemacs-dark t)
+
+(require-package 'which-key)
+(require 'which-key)
+(which-key-mode)
 
 (require-package 'evil-leader)
 (require 'evil-leader)
@@ -158,11 +169,15 @@
         "9" 'select-window-9)
       (window-numbering-mode 1)
 
+(require-package 'evil-jumper)
+(require 'evil-jumper)
+(global-evil-jumper-mode)
+
 (require-package 'evil-escape)
 (require 'evil-escape)
 (global-set-key (kbd "C-c C-g") 'evil-escape)
-
 (require-package 'key-chord)
+(require 'key-chord)
 (key-chord-mode 1)
 (setq-default evil-escape-delay 0.2)
 (key-chord-define evil-insert-state-map  "jk" 'evil-normal-state)

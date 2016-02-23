@@ -26,8 +26,6 @@
   (c-set-offset 'block-open '+)
   (c-set-offset 'brace-list-open '+)   ; all "opens" should be indented by the c-indent-level
   (c-set-offset 'case-label '+))       ; indent case labels by c-indent-level, too
-(add-hook 'c-mode-hook 'my-c-mode-hook)
-(add-hook 'c++-mode-hook 'my-c-mode-hook)
 
 (defun my:c++-init ()
   (auto-complete-mode 1)
@@ -40,7 +38,9 @@
   (linum-mode 1)
   (toggle-truncate-lines 1)
   (c-set-offset 'innamespace 0)
-  )
+  (global-set-key "\C-m" 'newline-and-indent)
+  (global-set-key (kbd "C-<return>") 'newline)
+)
 
 (defun my-ctypes-load-hook ()
    (ctypes-read-file "~/.ctypes_std_c" nil t t))
@@ -72,12 +72,12 @@
      (setq indent-tabs-mode nil)
      (auto-complete-mode 1)
      (which-function-mode 1)
-    (hs-minor-mode 1)
-    (font-lock-add-keywords nil
-                            '(("\\<\\(FIXME\\|TODO\\|TBD\\|BUG\\):" 1 font-lock-warning-face t)))
-    (toggle-truncate-lines 1)
-    (c-set-offset 'innamespace '+)
-    (c-set-offset 'inline-open 0)
+     (hs-minor-mode 1)
+     (font-lock-add-keywords nil
+                             '(("\\<\\(FIXME\\|TODO\\|TBD\\|BUG\\):" 1 font-lock-warning-face t)))
+     (toggle-truncate-lines 1)
+     (c-set-offset 'innamespace '+)
+     (c-set-offset 'inline-open 0)
     )
 (add-hook  'csharp-mode-hook 'my-csharp-mode-fn t)
 

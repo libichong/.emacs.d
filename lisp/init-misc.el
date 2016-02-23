@@ -133,12 +133,12 @@
 
 ;;中文与外文字体设置
 ;; Setting English Font
-(set-face-attribute 'default nil :family "Consolas" :height 100)
+(set-face-attribute 'default nil :family "Consolas" :height 110)
 ;; Chinese Font
 (dolist (charset '(kana han symbol cjk-misc bopomofo))
 (set-fontset-font (frame-parameter nil 'font)
 charset
-(font-spec :family "Microsoft YaHei" :size 11)))
+(font-spec :family "Microsoft YaHei" :size 12)))
 
 ;; hilight syntax
 (global-font-lock-mode t)
@@ -208,7 +208,7 @@ charset
 
 
 (setq-default cursor-type 'box)
-(set-cursor-color "goldenrod")
+(set-cursor-color "blue")
 
 
 (setq w32-pass-lwindow-to-system nil
