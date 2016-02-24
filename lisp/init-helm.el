@@ -2,6 +2,7 @@
 (require 'helm-config)
 (helm-mode 1)
 
+
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
 (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
 (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
@@ -51,8 +52,6 @@
   (setq helm-grep-default-command "ack-grep -Hn --no-group --no-color %e %p %f"
         helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f"))
 
-(setq helm-semantic-fuzzy-match t
-      helm-imenu-fuzzy-match t)
 
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (define-key global-map "\C-z" 'helm-semantic-or-imenu)

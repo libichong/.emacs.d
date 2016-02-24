@@ -1,6 +1,6 @@
 ;;run M-x esup, and watch the magic happen.
-(require-package 'esup)
-(require 'esup)
+;; (require-package 'esup)
+;; (require 'esup)
 ;;==============================================================================
 ;; window number
 (require-package 'window-number)
@@ -12,12 +12,21 @@
 ;;=============================================================================
 ;; (require-package 'auto-complete)
 ;; (require 'auto-complete-settings)
-
 (require-package 'company)
 (add-hook 'after-init-hook 'global-company-mode)
 (setq company-idle-delay 0)
 (setq company-minimum-prefix-length 2)
 (setq company-selection-wrap-around t)
+
+(require 'ido)
+(ido-mode t)
+
+(require-package 'xah-find)
+(autoload 'xah-find-text "xah-find" "find replace" t)
+(autoload 'xah-find-text-regex "xah-find" "find replace" t)
+(autoload 'xah-find-replace-text "xah-find" "find replace" t)
+(autoload 'xah-find-replace-text-regex "xah-find" "find replace" t)
+(autoload 'xah-find-count "xah-find" "find replace" t)
 
 (require 'bm)
 (global-set-key (kbd "<C-f2>") 'bm-toggle)
@@ -29,9 +38,9 @@
 (global-set-key [(meta y)] 'browse-kill-ring)
 
 ;;dired plus
-(require-package 'dired+)
-(require 'dired+)
-(toggle-diredp-find-file-reuse-dir 1)
+;; (require-package 'dired+)
+;; (require 'dired+)
+;; (toggle-diredp-find-file-reuse-dir 1)
 
 (require 'popwin)
 (popwin-mode 1)
@@ -56,7 +65,7 @@
 (remove-hook 'kill-buffer-query-functions 'server-kill-buffer-query-function)
 
 ;; move the buffer
-(autoload 'buffer-move "buffer-move")
+(require 'buffer-move)
 (global-set-key (kbd "<C-M-up>")     'buf-move-up)
 (global-set-key (kbd "<C-M-down>")   'buf-move-down)
 (global-set-key (kbd "<C-M-left>")   'buf-move-left)
@@ -82,9 +91,9 @@
 (global-set-key [(shift f8)] 'highlight-symbol-prev)
 (global-set-key [(meta f8)] 'highlight-symbol-query-replace)
 
-;; (require-package 'undo-tree)
-;; (require 'undo-tree)
-;; (global-undo-tree-mode)
+(require-package 'undo-tree)
+(require 'undo-tree)
+(global-undo-tree-mode)
 
 (require-package 'rainbow-mode)
 (require 'rainbow-mode)
@@ -96,25 +105,14 @@
   :version "24")
 (global-rainbow-mode)
 
-;; (require-package 'color-theme)
-;; (require-package 'load-theme-buffer-local)
-;; (require-package 'leuven-theme)
-;; (load-theme 'leuven t)
-;; (require 'molokai-theme)
-;; (set-face-attribute 'region nil :background "#866")
-
 (setq everything-ffap-integration nil) ; to disable ffap integration
 (setq everything-cmd "C:\\Users\\bichongl\\OneDrive\\app\\es.exe")        ;; to let everything.el know where to find es.exe
 (require 'everything)
 (defalias 'es 'everything)
 
-;; (require-package 'ace-jump-mode)
-;; (autoloaddcdcscdcscdcascs
-  ;; 'ace-jump-mode
-  ;; "ace-jump-mode"
-  ;; "Emacs quick move minor mode"
-  ;; t)
-;; (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+(require-package 'nyan-mode)
+(case window-system
+  ((x w32) (nyan-mode)))
 
 (require-package 'avy)
 (global-set-key (kbd "C-;") 'avy-goto-char)
@@ -127,62 +125,41 @@
 (global-set-key (kbd "M-%") 'anzu-query-replace)
 (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
 
-(require-package 'nyan-mode)
-(case window-system
-  ((x w32) (nyan-mode)))
-
 (require-package 'powerline)
 (require 'powerline)
 (setq powerline-arrow-shape 'arrow)
 (powerline-default-theme)
 (setq powerline-default-separator-dir '(right . left))
 
-(require-package 'evil)
-(require 'evil)
-(evil-mode 0)
+;; (require-package 'helm-projectile)
+;; (projectile-global-mode)
+;; (setq projectile-completion-system 'helm)
+;; (helm-projectile-on)
+;; (setq projectile-indexing-method 'alien)
 
 ;; (require-package 'spacemacs-theme)
-;; (load-theme 'spacemacs-dark t)
-
-(require-package 'which-key)
-(require 'which-key)
-(which-key-mode)
-
-(require-package 'evil-leader)
-(require 'evil-leader)
-(global-evil-leader-mode)
-(evil-leader/set-leader ",")
-(require-package 'window-numbering)
-(require 'window-numbering)
-(setq window-numbering-assign-func
-      (lambda () (when (equal (buffer-name) "*Calculator*") 9)))
-      (evil-leader/set-key
-        "0" 'select-window-0
-        "1" 'select-window-1
-        "2" 'select-window-2
-        "3" 'select-window-3
-        "4" 'select-window-4
-        "5" 'select-window-5
-        "6" 'select-window-6
-        "7" 'select-window-7
-        "8" 'select-window-8
-        "9" 'select-window-9)
-      (window-numbering-mode 1)
-
-(require-package 'evil-jumper)
-(require 'evil-jumper)
-(global-evil-jumper-mode)
-
-(require-package 'evil-escape)
-(require 'evil-escape)
-(global-set-key (kbd "C-c C-g") 'evil-escape)
-(require-package 'key-chord)
-(require 'key-chord)
-(key-chord-mode 1)
-(setq-default evil-escape-delay 0.2)
-(key-chord-define evil-insert-state-map  "jk" 'evil-normal-state)
+;; (require 'spacemacs-dark-theme)
 
 (require-package 'hungry-delete)
 (require 'hungry-delete)
 (global-hungry-delete-mode t)
+
+(require-package 'vlf)
+(require 'vlf)
+
+(require-package 'web-mode)
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+
+(require-package 'powershell)
+(autoload 'powershell-mode "powershell-mode" "A editing mode for Microsoft PowerShell." t)
+(add-to-list 'auto-mode-alist '("\\.ps1\\'" . powershell-mode)) ; PowerShell script
+
 (provide 'init-pack)

@@ -287,11 +287,6 @@ See also `with-temp-buffer'."
    (interactive)
    (find-file "~/.emacs.d/lisp/init-misc.el"))
 
-(defun gelpa ()
-   "Go to Init-elpa.el"
-   (interactive)
-   (find-file "~/.emacs.d/lisp/init-elpa.el"))
-
 (defun gfunc ()
    "Go to init-func.el"
    (interactive)

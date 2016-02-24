@@ -1,23 +1,4 @@
-;; -*- Emacs-Lisp -*-
-
-;; Time-stamp: <2010-08-28 22:38:00 Saturday by taoshanwen>
-
-;; This  file is free  software; you  can redistribute  it and/or
-;; modify it under the terms of the GNU General Public License as
-;; published by  the Free Software Foundation;  either version 3,
-;; or (at your option) any later version.
-
-;; This file is  distributed in the hope that  it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR  A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-
-;; You  should have  received a  copy of  the GNU  General Public
-;; License along with  GNU Emacs; see the file  COPYING.  If not,
-;; write  to  the Free  Software  Foundation,  Inc., 51  Franklin
-;; Street, Fifth Floor, Boston, MA 02110-1301, USA.
-
-;; personal informatio
+; personal informatio
 (setq user-mail-address "bichongl@microsoft.com")
 (setq user-full-name    "bichongl")
 
@@ -66,7 +47,6 @@
 ;; disable blink cursor
 (blink-cursor-mode t)
 
-
 ;; 防止页面滚动时跳动,scroll-margin 3
 ;;可以在靠近屏幕边沿3行时就开始滚动,可以很好的看到上下文
 (setq scroll-margin 3
@@ -100,9 +80,8 @@
 
 (setq compilation-scroll-output t)
 
-;; (when (string= user-real-login-name "pi")
-;;(menu-bar-mode -1)
-;;(global-set-key (kbd "<C-f1>") 'menu-bar-mode)
+(menu-bar-mode 1)
+(global-set-key (kbd "<C-f1>") 'menu-bar-mode)
 
 (setq ompletion-ignore-case t)
 
@@ -140,6 +119,7 @@
 charset
 (font-spec :family "Microsoft YaHei" :size 12)))
 
+;;(setq-default line-spacing 2)
 ;; hilight syntax
 (global-font-lock-mode t)
 
@@ -191,11 +171,13 @@ charset
 (setq dired-recursive-copies 'top)
 (setq dired-recursive-deletes 'top)
 
+;; color-theme
+;; (require 'molokai-theme)
+;; (set-face-attribute 'region nil :background "#866")
 (global-auto-revert-mode t)
 
 (setq w32-pass-lwindow-to-system nil) ;; prevent single keypress from activating Start Menu
 (setq w32-lwindow-modifier 'nil)      ;; make sure it's not used as a modifier
-
 
 (define-key key-translation-map (kbd "<lwindow>") 'event-apply-super-modifier)
 (define-key key-translation-map (kbd "<apps>") 'event-apply-alt-modifier)
@@ -209,7 +191,6 @@ charset
 
 (setq-default cursor-type 'box)
 (set-cursor-color "blue")
-
 
 (setq w32-pass-lwindow-to-system nil
       w32-pass-rwindow-to-system nil
@@ -244,6 +225,7 @@ charset
 
 (setq exec-path (add-to-list 'exec-path "C:/Users/bichongl/.babun/cygwin/bin"))
 ;;(setenv "PATH" (concat "C:/Users/bichongl/.babun/cygwin/bin;" (getenv "PATH")))
+(defconst my-emacs-lisps-path "~/.emacs.d/lisp/" "my emacs root")
 ;; (global-set-key [(f8)] 'loop-alpha)
 ;; (setq alpha-list '((100 100) (95 65) (85 55) (75 45) (65 35)))
 ;; (defun loop-alpha ()
@@ -307,7 +289,7 @@ charset
 (global-set-key [C-S-f11] 'w32-restore-frame)
 
 (defvar mode-line-cleaner-alist
-  `((auto-complete-mode . "")
+  `((company-mode . "")
     (yas/minor-mode . " υ")
     (paredit-mode . " π")
     (eldoc-mode . "")
@@ -342,7 +324,6 @@ want to use in the modeline *in lieu of* the original.")
              (when (eq mode major-mode)
                (setq mode-name mode-str)))))
 
-
 (add-hook 'after-change-major-mode-hook 'clean-mode-line)
 
 ;;; alias the new `flymake-report-status-slim' to
@@ -354,12 +335,13 @@ want to use in the modeline *in lieu of* the original.")
     (setq flymake-mode-line-e-w e-w))
   (when status
     (setq flymake-mode-line-status status))
-  (let* ((mode-line " Φ"))
+  (let* ((mode-line " |-"))
     (when (> (length flymake-mode-line-e-w) 0)
       (setq mode-line (concat mode-line ":" flymake-mode-line-e-w)))
     (setq mode-line (concat mode-line flymake-mode-line-status))
     (setq flymake-mode-line mode-line)
     (force-mode-line-update)))
+
 ;;(require 'recentf)
 ;; (recentf-mode t)
 ;; (defun revert-buffer-no-confirm ()
@@ -380,7 +362,7 @@ want to use in the modeline *in lieu of* the original.")
 (global-set-key [f12] 'save-buffer)
 (global-set-key [f5] 'toggle-read-only)
 (global-set-key [f6] 'revert-buffer-no-confirm)
-;;(global-set-key (kbd "<f7>") 'recentf-open-files)
+(global-set-key (kbd "<f7>") 'recentf-open-files)
 (global-set-key "\C-l" 'bookmark-bmenu-list)
 (global-set-key (kbd "C-c C-f") 'indent-region)
 (defalias 'qrr 'query-replace-regexp)
@@ -395,5 +377,4 @@ want to use in the modeline *in lieu of* the original.")
 (defalias 'ps 'powershell)
 (defalias 'rf 'recentf-open-files)
 (defalias 'lcd 'list-colors-display)
-
 (provide 'init-misc)
